@@ -13,9 +13,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Projects\\Csharp\\TpCsharp\\ConsoleApp1.csproj",
-      "projectName": "ConsoleApp1",
-      "projectPath": "C:\\Projects\\Csharp\\TpCsharp\\ConsoleApp1.csproj",
+      "projectUniqueName": "C:\\Projects\\Csharp\\TpCsharp\\Tp.csproj",
+      "projectName": "Tp",
+      "projectPath": "C:\\Projects\\Csharp\\TpCsharp\\Tp.csproj",
       "packagesPath": "C:\\Users\\Corentin\\.nuget\\packages\\",
       "outputPath": "C:\\Projects\\Csharp\\TpCsharp\\obj\\",
       "projectStyle": "PackageReference",
