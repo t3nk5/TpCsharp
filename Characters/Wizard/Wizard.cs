@@ -1,4 +1,4 @@
-﻿namespace Tp.Character.wizard;
+﻿namespace Tp.Characters.wizard;
 
 public class Wizard: Character
 {

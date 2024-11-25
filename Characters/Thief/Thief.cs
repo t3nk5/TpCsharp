@@ -1,4 +1,4 @@
-﻿namespace Tp.Character.Thief;
+﻿namespace Tp.Characters.Thief;
 
 public class Thief : Character
 {

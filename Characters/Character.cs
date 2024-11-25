@@ -1,4 +1,4 @@
-﻿namespace Tp.Character;
+﻿namespace Tp.Characters;
 
 public class Character
 { 
@@ -27,7 +27,12 @@ public class Character
                 ParadeChance = paradeChance;
                 SpellChance = spellChance;
         }
-        
+
+
+        public void Attack(Character attacker, Character target)
+        {
+                
+        }
         
 
      

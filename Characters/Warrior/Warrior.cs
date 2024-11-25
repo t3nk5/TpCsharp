@@ -1,6 +1,6 @@
 ﻿using static Tp.Armors.Armors;
 
-namespace Tp.Character.Warrior;
+namespace Tp.Characters.Warrior;
 
 public class Warrior : Character
 {

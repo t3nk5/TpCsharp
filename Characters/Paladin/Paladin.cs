@@ -1,4 +1,4 @@
-﻿namespace Tp.Character.Paladin;
+﻿namespace Tp.Characters.Paladin;
 
 public class Paladin : Character
 {
