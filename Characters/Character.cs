@@ -1,10 +1,12 @@
-﻿namespace Tp.Characters;
+﻿using Tp.Actions.Attack;
 
-public class Character
-{ 
-        protected string Name { get; set; }
-        protected int Pv { get; set; }
-        protected int PvActual { get; set; }
+namespace Tp.Characters;
+
+public abstract class Character
+{
+        public string Name { get; set; }
+        public int Pv { get; set; }
+        public int PvActual { get; set; }
         protected int PhysicalAttack { get; set; }
         protected int MagicalAttack { get; set; }
         protected Armors.Armors Armor { get; set; }
@@ -12,10 +14,10 @@ public class Character
         protected decimal ParadeChance { get; set; }
         protected decimal SpellChance { get; set; }
         
-        
-        protected bool IsAlive { get; set; } =  true;
+        public bool IsAlive { get; set; } =  true;
 
-        public Character(string name, int pv, int pvActual, int physicalAttack, int magicalAttack, Armors.Armors armor, decimal dodgeChance, decimal paradeChance, decimal spellChance)
+        
+        protected Character(string name, int pv, int pvActual, int physicalAttack, int magicalAttack, Armors.Armors armor, decimal dodgeChance, decimal paradeChance, decimal spellChance)
         {
                 Name = name;
                 Pv = pv;
@@ -28,11 +30,47 @@ public class Character
                 SpellChance = spellChance;
         }
 
-
-        public void Attack(Character attacker, Character target)
+        public void GetAttack(Attack attack)
         {
+                if (!IsAlive)
+                {
+                        Console.WriteLine($"{Name} is already dead and can't be attacked.");
+                        return;
+                }
+                if (Dodge(attack))
+                {
+                        Console.WriteLine($"{Name} dodged the attack {attack.Name} !");
+                        return;
+                }
+
+                if (Parade(attack))
+                {
+                        Console.WriteLine($"{Name} parried the attack {attack.Name}!");
+                        return;
+                }
+                
+                
+                var damage = attack.Damage;
+                
+                
+                
                 
         }
+        
+        
+        
+        private bool Dodge(Attack attack)
+        {
+                var rand = new Random();
+                return rand.NextDouble() < (double)DodgeChance;
+        }
+        private bool Parade(Attack attack)
+        {
+                var rand = new Random();
+                return rand.NextDouble() < (double)ParadeChance;
+        }
+
+        
         
 
      
