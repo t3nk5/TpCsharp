@@ -6,10 +6,10 @@ namespace Tp.Actions.Attack;
 public class Attack
 {
     public readonly string Name;
-    private Character Attacker;
-    private Character Target;
+    private readonly Character Attacker;
+    private readonly Character Target;
     public readonly int Damage;
-    private Damage TypeDamage;
+    public readonly Damage TypeDamage;
 
     public Attack(string name, Character attacker, Character target, int damage, Damage typeDamage)
     {

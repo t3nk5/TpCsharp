@@ -1,4 +1,5 @@
 ﻿using Tp.Actions.Attack;
+using Tp.Actions.Damages;
 
 namespace Tp.Characters;
 
@@ -10,11 +11,11 @@ public abstract class Character
         protected int PhysicalAttack { get; set; }
         protected int MagicalAttack { get; set; }
         protected Armors.Armors Armor { get; set; }
-        protected decimal DodgeChance { get; set; }
-        protected decimal ParadeChance { get; set; }
+        private decimal DodgeChance { get; set; }
+        private decimal ParadeChance { get; set; }
         protected decimal SpellChance { get; set; }
-        
-        public bool IsAlive { get; set; } =  true;
+
+        private bool IsAlive { get; set; } =  true;
 
         
         protected Character(string name, int pv, int pvActual, int physicalAttack, int magicalAttack, Armors.Armors armor, decimal dodgeChance, decimal paradeChance, decimal spellChance)
@@ -50,10 +51,17 @@ public abstract class Character
                 }
                 
                 
-                var damage = attack.Damage;
                 
+                var damage = CalculateDamage(attack);
+                ApplyDamage(damage);
+
                 
-                
+                if (PvActual <= 0)
+                {
+                        IsAlive = false;
+                        PvActual = 0;
+                        Console.WriteLine($"{Name} has died.");
+                }
                 
         }
         
@@ -70,11 +78,40 @@ public abstract class Character
                 return rand.NextDouble() < (double)ParadeChance;
         }
 
-        
-        
+        private int CalculateDamage(Attack attack)
+        {
+                var damage = attack.Damage;
+                
+                if (attack.TypeDamage == Damage.Physical)
+                {
+                        damage = (int)(damage * GetPhysicalArmorReduction());
+                }
+                else if (attack.TypeDamage == Damage.Magical)
+                {
+                        damage = (int)(damage * GetMagicalArmorReduction());
+                }
 
-     
-    
-    
-    
+                return damage;
+        }
+
+        private decimal GetPhysicalArmorReduction()
+        {
+                
+        }
+
+        private decimal GetMagicalArmorReduction()
+        {
+        }
+        
+        
+        private void ApplyDamage(int damage)
+        {
+                PvActual -= damage;
+                Console.WriteLine($"{Name} takes {damage} damage. Remaining HP: {PvActual}/{Pv}");
+        }
+
+
+
+
+
 }
