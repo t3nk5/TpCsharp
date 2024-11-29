@@ -1,4 +1,5 @@
-﻿using Tp.Actions.Damages;
+﻿using System.Diagnostics;
+using Tp.Actions.Damages;
 using Tp.Characters;
 
 namespace Tp.Actions.Attack;
@@ -6,31 +7,32 @@ namespace Tp.Actions.Attack;
 public class Attack
 {
     public readonly string Name;
-    private readonly Character Attacker;
-    private readonly Character Target;
+    private readonly Character Characters;
     public readonly int Damage;
     public readonly Damage TypeDamage;
+    public Target Target;
+    public List<Character> CharactersTarget;
 
-    public Attack(string name, Character attacker, Character target, int damage, Damage typeDamage)
+    public Attack(string name, Character attacker, Target target, int damage, Damage typeDamage,
+        List<Character> characters)
     {
         Name = name;
-        Attacker = attacker;
+        Characters = attacker;
         Target = target;
         Damage = damage;
         TypeDamage = typeDamage;
+        CharactersTarget = characters;
     }
 
-
+    
     public void Execute()
     {
-        Target.PvActual -= Damage;
-        
-        if (Target.PvActual < 0)
+        Console.WriteLine("type de l'attaque " + GetType().Name);
+        foreach (var character in CharactersTarget)
         {
-            Target.PvActual = 0;
+            character.GetAttackPhysical(TypeDamage, Damage);
         }
         
-        Console.WriteLine($"{Attacker.Name} use {Name} on {Target.Name} and make {Damage} damages {TypeDamage}.");
-        Console.WriteLine($"{Target.Name} has now {Target.PvActual}/{Target.Pv} health points.");
     }
+    
 }

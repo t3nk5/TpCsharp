@@ -1,5 +1,6 @@
 ﻿namespace Tp.Characters.Thief;
 
+/*
 public class Thief : Character
 {
     public Thief(string name,
@@ -13,3 +14,4 @@ public class Thief : Character
         : base(name, pv, pvActual, physicalAttack, magicalAttack, Armors.Armors.Leather, dodgeChance, paradeChance, spellChance)
     {}
 }
+*/

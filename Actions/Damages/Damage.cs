@@ -3,5 +3,6 @@
 public enum Damage
 {
     Physical,
-    Magical
+    Magical,
+    Heal
 }
