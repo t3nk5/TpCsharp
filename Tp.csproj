@@ -9,8 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="PasFinis\" />
-      <Folder Include="Utils\" />
+      <Folder Include="test\Utils\" />
     </ItemGroup>
 
 </Project>
