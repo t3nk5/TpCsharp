@@ -1,4 +1,4 @@
-﻿namespace Tp.Armors;
+﻿namespace Tp.Character.Armors;
 
 public enum Armors
 {
