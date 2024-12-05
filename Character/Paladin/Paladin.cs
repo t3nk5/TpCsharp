@@ -22,14 +22,19 @@
             Speed = 40; // quelle vitesse ?
             Mana = 60;
             
-            Spells.Add(new Spell("Cross-Strike", 1, Target.EnemyTarget, 5));
-            Spells.Add(new Spell("Judgment", 1, Target.EnemyTarget, 10));
-            Spells.Add(new Spell("Flash of Light", 1, Target.EnemyTarget, 25));
-            
+/*
+            Spells.Add(new Spell("Cross-Strike", 2, Target.EnemyTarget, 5));
+            Spells.Add(new Spell("Judgment", 2, Target.EnemyTarget, 10));
+            Spells.Add(new Spell("Flash of Light", 2, Target.EnemyTarget, 25));
+            */
             
             
             
         }
 
+        public override void Choice(string choice)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

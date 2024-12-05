@@ -19,7 +19,7 @@ namespace Tp.Character
         public List<Spell> Spells { get; set; } = new List<Spell>();
         public int Mana { get; set; }
 
-        protected bool IsAlive { get; set; }
+        public bool IsAlive { get; set; } = true;
 
         public virtual void Attack(Character target, Spell spell)
         {
@@ -28,6 +28,7 @@ namespace Tp.Character
 
         public virtual void GetAttack(int damage)
         {
+            /*
             PvActual -= damage;
             Console.WriteLine($"{Name} suffered {damage} damage. PV actual : {PvActual}/{PV}");
             if (PvActual <= 0)
@@ -35,9 +36,10 @@ namespace Tp.Character
                 IsAlive = false;
                 Dead();
             }
+            */
         }
 
-        public virtual void Heal(int heal)
+        public void Heal(int heal)
         {
             PvActual += Math.Min(PvActual + heal, PV);
             Console.WriteLine($"{Name} suffered {heal} heal.");
@@ -54,6 +56,10 @@ namespace Tp.Character
         {
             Console.WriteLine($"{Name} is dead !");
         }
+
+        public abstract void Choice(string choice);
+
+
 
     }
 }

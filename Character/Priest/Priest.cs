@@ -22,15 +22,20 @@
             Speed = 70;
             Mana = 100;
             
-            Spells.Add(new Spell("Punishment", 1, Target.EnemyTarget, 15));
-            Spells.Add(new Spell("Circle Of Care", 2, Target.Team, 30));
-            Spells.Add(new Spell("Mana Burn", 3, Target.EnemyTarget, 20));
             
+            /*
+            Spells.Add(new Spell("Punishment", 2, Target.EnemyTarget, 15));
+            Spells.Add(new Spell("Circle Of Care", 3, Target.Team, 30));
+            Spells.Add(new Spell("Mana Burn", 2, Target.EnemyTarget, 20));
+            */
             
             
         }
 
 
-
+        public override void Choice(string choice)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

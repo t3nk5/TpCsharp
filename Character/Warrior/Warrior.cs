@@ -22,12 +22,34 @@
             Speed = 50;
             Mana = 0;
 
-            Spells.Add(new Spell("Heroic Attack", 1, Target.EnemyTarget, 0));
-            Spells.Add(new Spell("Cry Of Battle", 2, Target.Team, 0));
+            /*
+            Spells.Add(new Spell("Heroic Attack", 2, Target.EnemyTarget, 0));
+            Spells.Add(new Spell("Cry Of Battle", 3, Target.Team, 0));
             Spells.Add(new Spell("Whirlwind", 2, Target.TeamEnemiesTarget, 0));
-
+*/
 
         }
 
+
+        public override void GetAttack(int damage)
+        {
+            base.GetAttack(damage);
+            
+        }
+
+        public override void Choice(string choice)
+        {
+            switch (choice)
+            {
+                case "1":
+                    
+                    break;
+                case "2":
+                    break;
+                
+                case "3":
+                    break;
+            }
+        }
     }
 }

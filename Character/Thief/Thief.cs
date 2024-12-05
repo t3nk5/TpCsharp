@@ -22,12 +22,17 @@
             Speed = 100;
             Mana = 0;
             
-            Spells.Add(new Spell("Cheap Shot", 1, Target.EnemyTarget, 0));
-            Spells.Add(new Spell("Evasion", 0, Target.Yourself, 0));
-            
+            /*
+            Spells.Add(new Spell("Cheap Shot", 2, Target.EnemyTarget, 0));
+            Spells.Add(new Spell("Evasion", 1, Target.Yourself, 0));
+            */
             
         }
 
+        public override void Choice(string choice)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }
