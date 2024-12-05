@@ -6,6 +6,7 @@
         EnemyTarget,
         TeamEnemiesTarget,
         Team,
-        Yourself
+        Yourself,
+        Other
     }
 }
