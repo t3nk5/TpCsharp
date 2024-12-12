@@ -4,10 +4,10 @@
     using DamageType;    
 
 
-    public abstract class Spell
+    public class Spell
     {
         public string Name { get; set; }
-        public int Cooldown { get; set; } //1 = disponible ce tour
+        public int Cooldown { get; set; } //1 = disponible ce tour 1 fois
         public int Damage { get; set; }
         public Target TargetType { get; set; }
         public Damage TypeDamage { get; set; }
