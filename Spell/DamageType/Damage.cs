@@ -4,7 +4,10 @@
     {
         Physical,
         Magical,
-        Heal
+        Heal,
+        Shield,
+        Mana, 
+        Other
 
     }
 }
