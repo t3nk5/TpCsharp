@@ -4,6 +4,7 @@
     using Armors;
     using Spell;
     using Spell.TargetType;
+    using Spell.DamageType;
     
 
     public class Warrior : Character
@@ -22,11 +23,11 @@
             Speed = 50;
             Mana = 0;
 
-            /*
-            Spells.Add(new Spell("Heroic Attack", 2, Target.EnemyTarget, 0));
-            Spells.Add(new Spell("Cry Of Battle", 3, Target.Team, 0));
-            Spells.Add(new Spell("Whirlwind", 2, Target.TeamEnemiesTarget, 0));
-*/
+            
+            Spells.Add(new Spell("Heroic Attack", 2, 50, Target.EnemyTarget, Damage.Physical, 0, null));
+            Spells.Add(new Spell("Cry Of Battle", 3, 25, Target.Team, Damage.Other, 0, null));
+            Spells.Add(new Spell("Whirlwind", 2, (int)Math.Round(0.33*PhysicalAttack), Target.TeamEnemiesTarget, Damage.Physical, 0, null));
+
 
         }
 
@@ -37,18 +38,38 @@
             
         }
 
-        public override void Choice(string choice)
+       
+        
+        
+        
+
+        public override void Choice()
         {
-            switch (choice)
+            Console.WriteLine("Which specialties used");
+            string? action = null;
+
+            while (action != "1" && action != "2" && action != "3")
+            {
+                Console.WriteLine("Which specialties to use? (1, 2, or 3)");
+                action = Console.ReadLine();
+
+                if (action != "1" && action != "2" && action != "3")
+                {
+                    Console.WriteLine("Invalid input. Please choose 1, 2, or 3.");
+                }
+            }
+            
+            switch (action)
             {
                 case "1":
                     
                     break;
                 case "2":
+                    
                     break;
-                
                 case "3":
                     break;
+                
             }
         }
     }
