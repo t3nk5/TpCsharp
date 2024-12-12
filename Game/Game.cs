@@ -6,46 +6,27 @@
     using Character.Paladin;
     using Character.Thief;
     using Character.Priest;
-    using Spell;
 
 
     public class Game
     {
-        private Dictionary<string, List<Character>> PlayersTeams = new Dictionary<string, List<Character>>();
+        private string? NamePlayer1 { get; set; }
+        private string? NamePlayer2 { get; set; }
 
-        private int NbrPlayer { get; set; } // the number of players in the game
+        private List<Character> Team1 = [];
+        private List<Character> Team2 = [];
 
 
         public void BeginGame()
         {
             Console.Clear();
             Console.WriteLine("Welcome to my game!");
-            var playerCount = GetPlayerCount();
-            InitializationCharacter(playerCount);
+            InitializationCharacter(2);
 
-            Console.WriteLine("Would you like to start the game? (Y/N)");
-
-            StartRound();
+            Console.WriteLine("The game start");
+            Round();
         }
 
-
-        private int GetPlayerCount()
-        {
-            int playerCount;
-            while (true)
-            {
-                Console.WriteLine("How many players would you like to play? (Between 2 and 5)" + Environment.NewLine);
-                var input = Console.ReadLine();
-
-                if (int.TryParse(input, out playerCount) && playerCount is >= 2 and <= 5)
-                {
-                    NbrPlayer = playerCount;
-                    return playerCount;
-                }
-
-                Console.WriteLine("Invalid input. Please enter a number between 2 and 5.");
-            }
-        }
 
         private void InitializationCharacter(int playerCount)
         {
@@ -54,10 +35,19 @@
                 Console.WriteLine($"Enter the name of Player {i}:");
                 var playerName = Console.ReadLine();
 
+                switch (i)
+                {
+                    case 1:
+                        NamePlayer1 = playerName;
+                        break;
+                    case 2:
+                        NamePlayer2 = playerName;
+                        break;
+                }
+
                 Console.WriteLine($"Player {playerName}, you will select 3 characters for your team.\n");
 
-                var playerTeam = new List<Character>();
-
+                var playerTeam = i == 1 ? Team1 : Team2;
 
                 for (var j = 1; j <= 3; j++)
                 {
@@ -73,26 +63,19 @@
                     {
                         var classInput = Console.ReadLine();
 
-                        switch (classInput)
+                        playerCharacter = classInput switch
                         {
-                            case "1":
-                                playerCharacter = new Warrior(characterName);
-                                break;
-                            case "2":
-                                playerCharacter = new Wizard(characterName);
-                                break;
-                            case "3":
-                                playerCharacter = new Paladin(characterName);
-                                break;
-                            case "4":
-                                playerCharacter = new Thief(characterName);
-                                break;
-                            case "5":
-                                playerCharacter = new Priest(characterName);
-                                break;
-                            default:
-                                Console.WriteLine("Invalid selection. Please choose a valid class (1-5).");
-                                break;
+                            "1" => new Warrior(characterName),
+                            "2" => new Wizard(characterName),
+                            "3" => new Paladin(characterName),
+                            "4" => new Thief(characterName),
+                            "5" => new Priest(characterName),
+                            _ => null
+                        };
+
+                        if (playerCharacter == null)
+                        {
+                            Console.WriteLine("Invalid selection. Please choose a valid class (1-5).");
                         }
                     }
 
@@ -102,14 +85,50 @@
                 }
 
                 Console.WriteLine($"\n{playerName}'s team is ready!\n");
-                PlayersTeams.Add(playerName, playerTeam);
             }
         }
 
-        private void StartRound()
+        private void Round()
         {
+            Console.WriteLine($"{NamePlayer1} it's your turn\nSelect your character to attack");
+            var index = 1; 
+            foreach (var character in Team1)
+            {
+                Console.WriteLine($"{index}. {character.Name}");
+                index++;
+            }
+
+            var result = Console.ReadLine();
+
+            while (int.TryParse(result, out var number) && number is >= 1 and <= 3)
+            { 
+                Console.WriteLine("Enter another number between 1 and 3 (or any other key to exit):");
+                result = Console.ReadLine();
+            }
             
+            switch (result)
+            {
+                case "1":
+                    Team1[0].Choice();
+                    break;
+                
+                case "2":
+                    Team1[1].Choice();
+                    break;
+                
+                case "3":
+                    Team1[2].Choice();
+                    break;
+                    
+            }
             
+
+
+        }
+
+
+        private void CheckWin()
+        {
         }
     }
 }
