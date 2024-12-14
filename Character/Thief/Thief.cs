@@ -25,9 +25,9 @@
             Mana = 0;
             
             
-            Spells.Add(new Spell("Cheap Shot", 2, PhysicalAttack, Target.EnemyTarget, Damage.Physical, 0, null));
-            Spells.Add(new Spell("Evasion", 1, 0, Target.Yourself, Damage.Other, 0, null));
-            Spells.Add(new Spell("Dagger in the back ", -1, 15, Target.EnemyTarget, Damage.Physical, 0, null));
+            Spells.Add(new Spell("Cheap Shot", 2, PhysicalAttack, this, Target.EnemyTarget, Damage.Physical, 0, null));
+            Spells.Add(new Spell("Evasion", 1, 0, this, Target.Yourself, Damage.Other, 0, null));
+            Spells.Add(new Spell("Dagger in the back ", -1, 15, this, Target.EnemyTarget, Damage.Physical, 0, null));
             
             
         }

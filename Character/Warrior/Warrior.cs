@@ -24,9 +24,9 @@
             Mana = 0;
 
             
-            Spells.Add(new Spell("Heroic Attack", 2, 50, Target.EnemyTarget, Damage.Physical, 0, null));
-            Spells.Add(new Spell("Cry Of Battle", 3, 25, Target.Team, Damage.Other, 0, null));
-            Spells.Add(new Spell("Whirlwind", 2, (int)Math.Round(0.33*PhysicalAttack), Target.TeamEnemiesTarget, Damage.Physical, 0, null));
+            Spells.Add(new Spell("Heroic Attack", 2, 50, this, Target.EnemyTarget, Damage.Physical, 0, null));
+            Spells.Add(new Spell("Cry Of Battle", 3, 25, this, Target.Team, Damage.Other, 0, null));
+            Spells.Add(new Spell("Whirlwind", 2, (int)Math.Round(0.33*PhysicalAttack), this, Target.TeamEnemiesTarget, Damage.Physical, 0, null));
 
 
         }

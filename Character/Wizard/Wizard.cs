@@ -9,8 +9,6 @@
     
     public class Wizard : Character, IMana.IMana
     {
-        public int MaxMana { get; set; }
-
         public Wizard(string name)
         {
             Name = name;
@@ -29,10 +27,10 @@
             
             
             
-            Spells.Add(new Spell("Frost Bolt", 2, MagicalAttack, Target.EnemyTarget, Damage.Magical, 15, null));
-            Spells.Add(new Spell("Frost Barrier ", 3, 0, Target.Yourself, Damage.Shield, 25, null));
-            Spells.Add(new Spell("Blizzard", 3, (int)0.5 * MagicalAttack, Target.TeamEnemiesTarget, Damage.Magical, 25, null));
-            Spells.Add(new Spell("Casting of the spell", 3, 0, Target.EnemyTarget, Damage.Magical, 25, null));
+            Spells.Add(new Spell("Frost Bolt", 2, MagicalAttack, this, Target.EnemyTarget, Damage.Magical, 15, null));
+            Spells.Add(new Spell("Frost Barrier ", 3, 0, this, Target.Yourself, Damage.Shield, 25, null));
+            Spells.Add(new Spell("Blizzard", 3, (int)0.5 * MagicalAttack, this, Target.TeamEnemiesTarget, Damage.Magical, 25, null));
+            Spells.Add(new Spell("Casting of the spell", 3, 0, this, Target.EnemyTarget, Damage.Magical, 25, null));
             
         }
 

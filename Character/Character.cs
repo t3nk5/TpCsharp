@@ -17,7 +17,9 @@ namespace Tp.Character
         protected double ParadeChance { get; set; }
         public double SpellResistanceChance { get; set; }
         public List<Spell> Spells { get; set; } = [];
+        
         public int Mana { get; set; }
+        public int MaxMana { get; set; }
 
         public bool IsAlive { get; set; } = true;
 
@@ -45,6 +47,27 @@ namespace Tp.Character
             
             PvActual += healAmount;
             Console.WriteLine($"{Name} was healed by {healAmount} points. Current HP: {PvActual}/{PV}");
+        }
+
+        
+        public void RemoveMana(int manaCost)
+        {
+            if (manaCost <= 0)
+            {
+                Console.WriteLine($"Error: Mana cost must be greater than 0. Value provided: {manaCost}");
+                return;
+            }
+            
+            var manaToRemove = Math.Min(manaCost, Mana); 
+
+            if (manaToRemove <= 0)
+            {
+                Console.WriteLine($"{Name} does not have enough mana to use this ability.");
+                return;
+            }
+            
+            Mana -= manaToRemove;
+            Console.WriteLine($"{Name} used {manaToRemove} mana. Current mana: {Mana}/{MaxMana}");
         }
 
 

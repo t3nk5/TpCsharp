@@ -23,11 +23,11 @@
             
             Speed = 40; 
             Mana = 60;
-            Spells.Add(new Spell("Cry Of Battle", 3, 25, Target.Team, Damage.Other, 0, null));
+            Spells.Add(new Spell("Cry Of Battle", 3, 25, this, Target.Team, Damage.Other, 0, null));
 
-            Spells.Add(new Spell("RIP my ACL", 2, PhysicalAttack, Target.EnemyTarget, Damage.Physical, 5, null));
-            Spells.Add(new Spell("Judgment", 2, MagicalAttack, Target.EnemyTarget, Damage.Magical, 10, null));
-            Spells.Add(new Spell("Flash of Light", 2, (int)1.25 * MagicalAttack, Target.Partner, Damage.Heal, 25, null));
+            Spells.Add(new Spell("RIP my ACL", 2, PhysicalAttack, this, Target.EnemyTarget, Damage.Physical, 5, null));
+            Spells.Add(new Spell("Judgment", 2, MagicalAttack, this, Target.EnemyTarget, Damage.Magical, 10, null));
+            Spells.Add(new Spell("Flash of Light", 2, (int)1.25 * MagicalAttack, this, Target.Partner, Damage.Heal, 25, null));
             
             
             
