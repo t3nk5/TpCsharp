@@ -2,12 +2,12 @@
 {
     public enum Damage
     {
-        Physical,
-        Magical,
-        Heal,
-        Shield,
-        Mana, 
-        Other
+        Physical, //physical attack 
+        Magical,  //magical attack 
+        Heal,     //heal 1 partner
+        Shield,   //
+        Mana,     //remove mana
+        Other     //
 
     }
 }

@@ -6,15 +6,18 @@
     using Character.Paladin;
     using Character.Thief;
     using Character.Priest;
+    using Spell;
 
 
     public class Game
     {
-        private string? NamePlayer1 { get; set; }
-        private string? NamePlayer2 { get; set; }
+        private string NamePlayer1 { get; set; }
+        private string NamePlayer2 { get; set; }
 
         private List<Character> Team1 = [];
         private List<Character> Team2 = [];
+        
+        private List<Spell> SpellsRound = [];
 
 
         public void BeginGame()
@@ -24,6 +27,19 @@
             InitializationCharacter(2);
 
             Console.WriteLine("The game start");
+
+            for (var i = 1; i <= 2; i++)
+            {
+                ChooseAttack(NamePlayer1, Team1);
+            }
+
+            for (var i = 1; i <= 2; i++)
+            {
+                ChooseAttack(NamePlayer2, Team2);
+            }
+            
+            SortAttack();
+            
             Round();
         }
 
@@ -80,51 +96,74 @@
                     }
 
                     playerTeam.Add(playerCharacter);
-                    Console.WriteLine(
-                        $"{characterName} the {playerCharacter.GetType().Name} has been added to {playerName}'s team.");
+                    Console.WriteLine($"{characterName} the {playerCharacter.GetType().Name} has been added to {playerName}'s team.");
                 }
 
                 Console.WriteLine($"\n{playerName}'s team is ready!\n");
             }
         }
 
-        private void Round()
+        private void ChooseAttack(string playerName, List<Character> team)
         {
-            Console.WriteLine($"{NamePlayer1} it's your turn\nSelect your character to attack");
-            var index = 1; 
-            foreach (var character in Team1)
+            Console.WriteLine($"{playerName}, it's your turn\nSelect your character to attack");
+            var index = 1;
+            
+            foreach (var character in team)
             {
-                Console.WriteLine($"{index}. {character.Name}");
+                Console.WriteLine($"{index}- {character.Name}");
                 index++;
             }
-
+            
             var result = Console.ReadLine();
-
-            while (int.TryParse(result, out var number) && number is >= 1 and <= 3)
-            { 
-                Console.WriteLine("Enter another number between 1 and 3 (or any other key to exit):");
+            while (!int.TryParse(result, out var number) || number < 1 || number > team.Count)
+            {
+                Console.WriteLine($"Invalid input. Please enter a number between 1 and {team.Count}:");
                 result = Console.ReadLine();
             }
+
+            var selectedCharacter = team[int.Parse(result) - 1];
+            Console.WriteLine($"\n{selectedCharacter.Name} has been selected.");
             
-            switch (result)
+            Console.WriteLine($"Select a spell for {selectedCharacter.Name}:");
+            index = 1;
+
+            foreach (var spell in selectedCharacter.Spells)
             {
-                case "1":
-                    Team1[0].Choice();
-                    break;
-                
-                case "2":
-                    Team1[1].Choice();
-                    break;
-                
-                case "3":
-                    Team1[2].Choice();
-                    break;
-                    
+                Console.WriteLine($"{index}. {spell.Name}");
+                index++;
             }
             
+            result = Console.ReadLine();
+            while (!int.TryParse(result, out var number) || number < 1 || number > selectedCharacter.Spells.Count)
+            {
+                Console.WriteLine($"Invalid input. Please enter a number between 1 and {selectedCharacter.Spells.Count}:");
+                result = Console.ReadLine();
+            }
 
-
+            var selectedSpell = selectedCharacter.Spells[int.Parse(result) - 1];
+            
+            SpellsRound.Add(selectedSpell);
         }
+
+
+        private void SortAttack()
+        {
+            
+        }
+        
+        
+        
+        
+        
+        private void Round()
+        {
+           
+        }
+
+            
+
+
+        
 
 
         private void CheckWin()
