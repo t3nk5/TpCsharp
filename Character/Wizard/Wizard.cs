@@ -9,9 +9,9 @@
     
     public class Wizard : Character, IMana.IMana
     {
-        public Wizard(string name)
+        public Wizard()
         {
-            Name = name;
+            Name = "Wizzard";
             PvActual = 60;
             PV = 60;
             PhysicalAttack = 0;

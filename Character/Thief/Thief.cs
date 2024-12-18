@@ -9,9 +9,9 @@
 
     public class Thief : Character
     {
-        public Thief(string name)
+        public Thief()
         {
-            Name = name;
+            Name = "Thief";
             PvActual = 80;
             PV = 80;
             PhysicalAttack = 55;

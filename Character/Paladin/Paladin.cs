@@ -9,9 +9,9 @@
 
     public class Paladin : Character
     {
-        public Paladin(string name)
+        public Paladin()
         {
-            Name = name;
+            Name = "Paladin";
             PvActual = 95;
             PV = 95;
             PhysicalAttack = 40;
