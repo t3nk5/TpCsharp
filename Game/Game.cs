@@ -1,6 +1,4 @@
-﻿using Tp.Spell.TargetType;
-
-namespace Tp.Game
+﻿namespace Tp.Game
 {
     using Character;
     using Character.Warrior;
@@ -23,7 +21,7 @@ namespace Tp.Game
         private Character SelectedCharacter { get; set; }
 
 
-        public List<Spell> SpellsRound = [];
+        private List<Spell> SpellsRound = [];
 
 
         public void BeginGame()
@@ -39,7 +37,6 @@ namespace Tp.Game
                 ChooseAttack(NamePlayer1, Team1);
             }
 
-
             for (var i = 1; i <= 3; i++)
             {
                 ChooseAttack(NamePlayer2, Team2);
@@ -47,8 +44,12 @@ namespace Tp.Game
 
 
             SortAttack();
+            DisplayAttack();
+            Attack();
 
             Round();
+            
+            //rajouter l'equipe pour chaque perso
         }
 
 
@@ -108,7 +109,6 @@ namespace Tp.Game
             DisplayTeam(Team2);
         }
 
-
         private void ChooseAttack(string? playerName, List<Character> team)
         {
             Console.WriteLine($"{playerName}, it's your turn\nSelect your character to attack");
@@ -139,32 +139,23 @@ namespace Tp.Game
             }
         }
 
-        private int TestTypeTarget()
+        private int TestTypeTarget(Spell spell)
         {
-            foreach (var spell in SpellsRound)
+            return spell.TargetType switch
             {
-                switch (spell.TargetType)
-                {
-                    case Target.EnemyTarget:
-                        return 1;
-                    case Target.TeamEnemiesTarget:
-                        return 2;
-                    case Target.Team:
-                        return 3;
-                    case Target.Partner:
-                        return 4;
-                    case Target.Yourself:
-                        return 5;
-                }
-            }
-
-            return 0;
+                Target.EnemyTarget => 1,
+                Target.TeamEnemiesTarget => 2,
+                Target.Team => 3,
+                Target.Partner => 4,
+                Target.Yourself => 5,
+                _ => 0
+            };
         }
 
         private void SwitchTargetType(string? playerName, List<Character> team, Spell selectedSpell)
         {
             List<Character>? enemyTeam;
-            switch (TestTypeTarget())
+            switch (TestTypeTarget(selectedSpell))
             {
                 case 0:
                     Console.WriteLine("No valid targets available.");
@@ -183,13 +174,11 @@ namespace Tp.Game
                     }
 
                     var result = Input(aliveCharacters.Count);
-                
+
                     var selectedTarget = aliveCharacters[int.Parse(result) - 1];
                     Console.WriteLine($"{playerName} has chosen to target {selectedTarget.Name}.");
                     selectedSpell.TargetCharacters = [selectedTarget];
                     SpellsRound.Add(selectedSpell);
-                
-
                     break;
 
                 case 2:
@@ -237,7 +226,7 @@ namespace Tp.Game
                     SpellsRound.Add(selectedSpell);
                     break;
 
-                case 5: 
+                case 5:
                     Console.WriteLine("You use the spell on yourself.");
                     selectedSpell.TargetCharacters = [SelectedCharacter];
                     SpellsRound.Add(selectedSpell);
@@ -248,7 +237,6 @@ namespace Tp.Game
                     break;
             }
         }
-
 
         private void DisplayTeam(List<Character> team)
         {
@@ -276,20 +264,89 @@ namespace Tp.Game
             }
         }
 
-
         private void SortAttack()
         {
+            if (SpellsRound.Count == 0)
+            {
+                Console.WriteLine("No spells to sort.");
+                return;
+            }
+
+            var random = new Random();
+            SpellsRound.Sort((spell1, spell2) =>
+            {
+                if (spell1.Attacker.Speed > spell2.Attacker.Speed)
+                {
+                    return -1; // spell1 before spell2
+                }
+
+                if (spell1.Attacker.Speed < spell2.Attacker.Speed)
+                {
+                    return 1; // spell2 before spell1
+                }
+                else
+                {
+                    // random when same speed
+                    return random.Next(0, 2) == 0 ? -1 : 1;
+                }
+            });
+
+            Console.WriteLine("Spells sorted by attacker speed:");
             foreach (var spell in SpellsRound)
             {
-                Console.WriteLine(spell.Name);
+                Console.WriteLine($"{spell.Name} (Attacker: {spell.Attacker.Name}, Speed: {spell.Attacker.Speed})");
             }
+        }
+
+        private void DisplayAttack()
+        {
+            if (SpellsRound.Count == 0)
+            {
+                Console.WriteLine("No spells have been cast this round.");
+                return;
+            }
+
+            Console.WriteLine("\nSpells cast this round:");
+            var index = 1;
+
+            foreach (var spell in SpellsRound)
+            {
+                Console.WriteLine($"Spell {index}:");
+                Console.WriteLine($"- Name: {spell.Name}");
+                Console.WriteLine($"- Cooldown: {spell.Cooldown}");
+                Console.WriteLine($"- Damage: {spell.Damage}");
+                Console.WriteLine($"- Mana Cost: {spell.ManaUse}");
+                Console.WriteLine($"- Attacker: {spell.Attacker?.Name ?? "Unknown"}");
+                Console.WriteLine($"- Target Type: {spell.TargetType}");
+                Console.WriteLine($"- Type of Damage: {spell.TypeDamage}");
+
+                if (spell.TargetCharacters.Count > 0)
+                {
+                    Console.WriteLine("- Targets:");
+                    foreach (var target in spell.TargetCharacters)
+                    {
+                        Console.WriteLine($"  * {target.Name} (HP: {target.PvActual}/{target.PV})");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("- Targets: None");
+                }
+
+                Console.WriteLine();
+                index++;
+            }
+        }
+
+        private void Attack()
+        {
+            SpellsRound.ForEach(spell => spell.Use());
         }
 
 
         private void Round()
         {
         }
-
 
         private void CheckWin()
         {
