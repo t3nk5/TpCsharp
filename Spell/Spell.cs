@@ -28,13 +28,8 @@
             TargetCharacters = target;
         }
 
-        public virtual void Use(Character user, List<Character> target)
+        public virtual void Use()
         {
-            foreach (var character in target)
-            {
-                Console.WriteLine($"{user.Name} use {Name} on {character.Name}.");
-            }
-
             foreach (var character in TargetCharacters)
             {
                 switch (TypeDamage)
@@ -57,14 +52,14 @@
                     
                     case DamageType.Damage.Shield:
                         break;
-                        
-                        //dans character faire un switch pour avoir le type dans une valeur et override la methode après
                 }
             }
-            
-            
-            
-            
+        }
+
+        
+        public override string ToString()
+        {
+            return $"Name: {Name}, Damage: {Damage}, Cooldown: {Cooldown}, Mana: {ManaUse}, Target: {TargetCharacters}";
         }
     }
 }
