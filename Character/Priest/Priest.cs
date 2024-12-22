@@ -35,34 +35,6 @@
         }
 
 
-        public override void Choice()
-        {
-            Console.WriteLine("Which specialties used");
-            string? action = null;
-
-            while (action != "1" && action != "2" && action != "3")
-            {
-                Console.WriteLine("Which specialties to use? (1, 2, or 3)");
-                action = Console.ReadLine();
-
-                if (action != "1" && action != "2" && action != "3")
-                {
-                    Console.WriteLine("Invalid input. Please choose 1, 2, or 3.");
-                }
-            }
-            
-            switch (action)
-            {
-                case "1":
-                    
-                    break;
-                case "2":
-                    
-                    break;
-                case "3":
-                    break;
-                
-            }
-        }
+       
     }
 }

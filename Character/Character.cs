@@ -83,7 +83,7 @@ namespace Tp.Character
             Console.WriteLine($"{Name} is dead !");
         }
 
-        public abstract void Choice();
+        
 
 
 
