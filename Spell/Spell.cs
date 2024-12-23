@@ -35,11 +35,11 @@
                 switch (TypeDamage)
                 {
                     case DamageType.Damage.Physical:
-                        character.GetAttack(Damage);
+                        character.GetAttack(Damage, TypeDamage);
                         break;
                     
                     case DamageType.Damage.Magical:
-                        character.GetAttack(Damage);
+                        character.GetAttack(Damage, TypeDamage);
                         break;
                     
                     case DamageType.Damage.Heal:
@@ -51,6 +51,8 @@
                         break;
                     
                     case DamageType.Damage.Shield:
+                        break;
+                    case DamageType.Damage.Other:
                         break;
                 }
             }

@@ -49,7 +49,6 @@
 
             Round();
             
-            //rajouter l'equipe pour chaque perso
         }
 
 

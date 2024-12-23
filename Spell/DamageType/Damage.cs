@@ -7,7 +7,8 @@
         Heal,     //heal 1 partner
         Shield,   //
         Mana,     //remove mana
-        Other     //
+        Other     //Special spell
+
 
     }
 }
