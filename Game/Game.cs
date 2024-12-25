@@ -15,13 +15,13 @@
         private string? NamePlayer1 { get; set; }
         private string? NamePlayer2 { get; set; }
 
-        private List<Character> Team1 = [];
-        private List<Character> Team2 = [];
+        private List<Character> _team1 = [];
+        private List<Character> _team2 = [];
 
         private Character SelectedCharacter { get; set; }
 
 
-        private List<Spell> SpellsRound = [];
+        private readonly List<Spell> _spellsRound = [];
 
 
         public void BeginGame()
@@ -32,23 +32,28 @@
 
             Console.WriteLine("\nThe game start");
 
-            for (var i = 1; i <= 3; i++)
+            while (!CheckWin())
             {
-                ChooseAttack(NamePlayer1, Team1);
+                Console.WriteLine("\n--- New Round ---\n");
+
+                for (var i = 1; i <= 3; i++)
+                {
+                    if (_team1.Any(c => c.IsAlive))
+                        ChooseAttack(NamePlayer1, _team1);
+                }
+
+                for (var i = 1; i <= 3; i++)
+                {
+                    if (_team2.Any(c => c.IsAlive))
+                        ChooseAttack(NamePlayer2, _team2);
+                }
+
+                SortAttack();
+                DisplayAttack();
+                Attack();
+                DecreaseCooldowns(_team1);
+                DecreaseCooldowns(_team2);
             }
-
-            for (var i = 1; i <= 3; i++)
-            {
-                ChooseAttack(NamePlayer2, Team2);
-            }
-
-
-            SortAttack();
-            DisplayAttack();
-            Attack();
-
-            Round();
-            
         }
 
 
@@ -68,15 +73,15 @@
 
             Console.WriteLine($"{NamePlayer1} and {NamePlayer2}, you will now take turns to select your characters.\n");
 
-            Team1 = [];
-            Team2 = [];
+            _team1 = [];
+            _team2 = [];
 
             var totalChoices = 6;
             for (var choice = 0; choice < totalChoices; choice++)
             {
                 var isPlayer1Turn = choice % 2 == 0; // Player 1 == pair
                 var currentPlayerName = isPlayer1Turn ? NamePlayer1 : NamePlayer2;
-                var currentTeam = isPlayer1Turn ? Team1 : Team2;
+                var currentTeam = isPlayer1Turn ? _team1 : _team2;
 
                 Console.WriteLine($"{currentPlayerName}, it's your turn to choose a character.");
                 Console.WriteLine("What class do you want?");
@@ -102,10 +107,10 @@
 
 
             Console.WriteLine($"\n{NamePlayer1}'s team is ready!");
-            DisplayTeam(Team1);
+            DisplayTeam(_team1);
 
             Console.WriteLine($"\n{NamePlayer2}'s team is ready!");
-            DisplayTeam(Team2);
+            DisplayTeam(_team2);
         }
 
         private void ChooseAttack(string? playerName, List<Character> team)
@@ -134,7 +139,18 @@
 
                 result = Input(selectedCharacter.Spells.Count);
                 var selectedSpell = selectedCharacter.Spells[int.Parse(result) - 1];
-                SwitchTargetType(playerName, team, selectedSpell);
+                
+                if (TestIfCooldownIsGood(selectedCharacter, selectedSpell))
+                {
+                    SwitchTargetType(playerName, team, selectedSpell);
+                }
+                else
+                {
+                    Console.WriteLine($"The spell '{selectedSpell.Name}' of  {selectedCharacter.Name} is on cooldown! Please select another spell.");
+                    ChooseAttack(playerName, team); 
+                }
+
+                
             }
         }
 
@@ -162,7 +178,7 @@
 
                 case 1:
                     Console.WriteLine("Which enemy?\n");
-                    enemyTeam = team == Team1 ? Team2 : Team1;
+                    enemyTeam = team == _team1 ? _team2 : _team1;
                     DisplayTeam(enemyTeam);
 
                     var aliveCharacters = enemyTeam.Where(c => c.IsAlive).ToList();
@@ -177,11 +193,11 @@
                     var selectedTarget = aliveCharacters[int.Parse(result) - 1];
                     Console.WriteLine($"{playerName} has chosen to target {selectedTarget.Name}.");
                     selectedSpell.TargetCharacters = [selectedTarget];
-                    SpellsRound.Add(selectedSpell);
+                    _spellsRound.Add(selectedSpell);
                     break;
 
                 case 2:
-                    enemyTeam = team == Team1 ? Team2 : Team1;
+                    enemyTeam = team == _team1 ? _team2 : _team1;
                     DisplayTeam(enemyTeam);
 
                     var aliveEnemies = enemyTeam.Where(c => c.IsAlive).ToList();
@@ -193,7 +209,7 @@
 
                     selectedSpell.TargetCharacters = aliveEnemies;
                     Console.WriteLine($"{playerName} has chosen to target all enemies with {selectedSpell.Name}.");
-                    SpellsRound.Add(selectedSpell);
+                    _spellsRound.Add(selectedSpell);
                     break;
 
                 case 3:
@@ -207,7 +223,7 @@
 
                     selectedSpell.TargetCharacters = aliveAllies;
                     Console.WriteLine($"{playerName} has chosen to target all allies with {selectedSpell.Name}.");
-                    SpellsRound.Add(selectedSpell);
+                    _spellsRound.Add(selectedSpell);
                     break;
 
                 case 4:
@@ -222,13 +238,13 @@
                     DisplayTeam(teammates);
                     selectedSpell.TargetCharacters = teammates;
                     Console.WriteLine($"{playerName} has chosen to target their teammates with {selectedSpell.Name}.");
-                    SpellsRound.Add(selectedSpell);
+                    _spellsRound.Add(selectedSpell);
                     break;
 
                 case 5:
                     Console.WriteLine("You use the spell on yourself.");
                     selectedSpell.TargetCharacters = [SelectedCharacter];
-                    SpellsRound.Add(selectedSpell);
+                    _spellsRound.Add(selectedSpell);
                     break;
 
                 default:
@@ -265,14 +281,14 @@
 
         private void SortAttack()
         {
-            if (SpellsRound.Count == 0)
+            if (_spellsRound.Count == 0)
             {
                 Console.WriteLine("No spells to sort.");
                 return;
             }
 
             var random = new Random();
-            SpellsRound.Sort((spell1, spell2) =>
+            _spellsRound.Sort((spell1, spell2) =>
             {
                 if (spell1.Attacker.Speed > spell2.Attacker.Speed)
                 {
@@ -291,7 +307,7 @@
             });
 
             Console.WriteLine("Spells sorted by attacker speed:");
-            foreach (var spell in SpellsRound)
+            foreach (var spell in _spellsRound)
             {
                 Console.WriteLine($"{spell.Name} (Attacker: {spell.Attacker.Name}, Speed: {spell.Attacker.Speed})");
             }
@@ -299,7 +315,7 @@
 
         private void DisplayAttack()
         {
-            if (SpellsRound.Count == 0)
+            if (_spellsRound.Count == 0)
             {
                 Console.WriteLine("No spells have been cast this round.");
                 return;
@@ -308,7 +324,7 @@
             Console.WriteLine("\nSpells cast this round:");
             var index = 1;
 
-            foreach (var spell in SpellsRound)
+            foreach (var spell in _spellsRound)
             {
                 Console.WriteLine($"Spell {index}:");
                 Console.WriteLine($"- Name: {spell.Name}");
@@ -339,16 +355,45 @@
 
         private void Attack()
         {
-            SpellsRound.ForEach(spell => spell.Use());
+            _spellsRound.ForEach(spell => spell.Use());
+        }
+
+        private bool TestIfCooldownIsGood(Character character, Spell selectedSpell)
+        {
+            return selectedSpell.ActualCooldown == 0 || selectedSpell.ActualCooldown == 1;
+        }
+        
+        private void DecreaseCooldowns(List<Character> team)
+        {
+            foreach (var character in team)
+            {
+                foreach (var spell in character.Spells)
+                {
+                    if (spell.ActualCooldown > 1)
+                    {
+                        spell.ActualCooldown -= 1;
+                        Console.WriteLine($"Cooldown for {spell.Name} decreased to {spell.ActualCooldown}.");
+                    }
+                }
+            }
         }
 
 
-        private void Round()
+        private bool CheckWin()
         {
-        }
+            if (!_team1.Any(c => c.IsAlive))
+            {
+                Console.WriteLine($"{NamePlayer2} wins! All characters in {NamePlayer1}'s team are defeated.");
+                return true;
+            }
 
-        private void CheckWin()
-        {
+            if (!_team2.Any(c => c.IsAlive))
+            {
+                Console.WriteLine($"{NamePlayer1} wins! All characters in {NamePlayer2}'s team are defeated.");
+                return true;
+            }
+
+            return false;
         }
     }
 }

@@ -23,7 +23,7 @@
 
         public bool IsAlive { get; set; } = true;
 
-        public virtual void GetAttack(int damage, Damage damageType)
+        public void GetAttack(int damage, Damage damageType)
         {
             if (Damage.Physical == damageType)
             {
@@ -82,8 +82,7 @@
             var roll = random.NextDouble();
             return roll < SpellResistanceChance;
         }
-
-
+        
         public void Heal(int heal)
         {
             var healAmount = Math.Min(heal, PV - PvActual);
@@ -97,8 +96,7 @@
             PvActual += healAmount;
             Console.WriteLine($"{Name} was healed by {healAmount} points. Current HP: {PvActual}/{PV}");
         }
-
-
+        
         public void RemoveMana(int manaCost)
         {
             if (manaCost <= 0)
@@ -119,15 +117,12 @@
             Console.WriteLine($"{Name} used {manaToRemove} mana. Current mana: {Mana}/{MaxMana}");
         }
 
-        public override string ToString()
-        {
-            return $"{Name}: {PvActual}/{PV} \n Armor {Armor}, Speed : {Speed}";
-        }
-
-        protected void Dead()
+        private void Dead()
         {
             IsAlive = false;
             Console.WriteLine($"{Name} is dead !");
         }
+        
+        
     }
 }

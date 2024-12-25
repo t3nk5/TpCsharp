@@ -8,7 +8,8 @@
     public class Spell
     {
         public string Name { get; set; }
-        public int Cooldown { get; set; } //1 = disponible ce tour 1 fois
+        public int Cooldown { get; set; } 
+        public int ActualCooldown { get; set; } //1 = disponible ce tour 1 fois
         public int Damage { get; set; }
         public Character Attacker { get; set; }
         public Target TargetType { get; set; }
@@ -20,6 +21,7 @@
         {
             Name = name;
             Cooldown = cooldown;
+            ActualCooldown = 1;
             Damage = damage;
             Attacker = attacker;
             TargetType = targetType;
@@ -56,8 +58,14 @@
                         break;
                 }
             }
+            SetCooldown();
         }
 
+        private void SetCooldown()
+        {
+            ActualCooldown = Cooldown;
+        }
+        
         
         public override string ToString()
         {

@@ -30,20 +30,5 @@
 
 
         }
-
-
-        public override void GetAttack(int damage, Damage damageType)
-        {
-            base.GetAttack(damage, damageType);
-            
-        }
-
-       
-        
-        
-        
-
-        
-    
     }
 }
