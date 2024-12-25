@@ -13,7 +13,7 @@
         {
             Name = "Thief";
             PvActual = 80;
-            PV = 80;
+            Pv = 80;
             PhysicalAttack = 55;
             MagicalAttack = 0;
             Armor = Armors.Leather;

@@ -13,7 +13,7 @@
         {
             Name = "Wizard";
             PvActual = 60;
-            PV = 60;
+            Pv = 60;
             PhysicalAttack = 0;
             MagicalAttack = 75;
             Armor = Armors.Fabric;

@@ -13,7 +13,7 @@
         {
             Name = "Priest";
             PvActual = 70;
-            PV = 70;
+            Pv = 70;
             PhysicalAttack = 0;
             MagicalAttack = 65;
             Armor = Armors.Fabric;

@@ -7,7 +7,7 @@
     public abstract class Character
     {
         public string Name { get; set; }
-        public int PV { get; set; }
+        public int Pv { get; set; }
         public int PvActual { get; set; }
         public int Speed { get; set; }
         public int PhysicalAttack { get; set; }
@@ -38,24 +38,31 @@
                     damage = (int)(damage * 0.5);
                     Console.WriteLine($"{Name} parried the attack, reducing damage to {damage}.");
                 }
-            }else if (Damage.Magical == damageType){
+
+                damage = CalculateDamageByArmors(damage, isPhysical: true, Armor);
+            }
+            else if (Damage.Magical == damageType)
+            {
                 if (ResistMagic())
                 {
                     Console.WriteLine($"{Name} resisted the magical attack. No damage taken.");
                     return;
                 }
+
+                damage = CalculateDamageByArmors(damage,  isPhysical: true, Armor);
             }
-
-
+            
             var previousPv = PvActual;
             PvActual = Math.Max(0, PvActual - damage);
 
-            Console.WriteLine($"{Name} suffered {damage} damage. HP: {previousPv} → {PvActual}/{PV}");
+            Console.WriteLine($"{Name} suffered {damage} damage. HP: {previousPv} → {PvActual}/{Pv}");
+            
             if (PvActual <= 0)
             {
                 Dead();
             }
         }
+
 
         private bool Dodge()
         {
@@ -85,7 +92,7 @@
         
         public void Heal(int heal)
         {
-            var healAmount = Math.Min(heal, PV - PvActual);
+            var healAmount = Math.Min(heal, Pv - PvActual);
 
             if (healAmount <= 0)
             {
@@ -94,7 +101,7 @@
             }
 
             PvActual += healAmount;
-            Console.WriteLine($"{Name} was healed by {healAmount} points. Current HP: {PvActual}/{PV}");
+            Console.WriteLine($"{Name} was healed by {healAmount} points. Current HP: {PvActual}/{Pv}");
         }
         
         public void RemoveMana(int manaCost)
@@ -122,7 +129,51 @@
             IsAlive = false;
             Console.WriteLine($"{Name} is dead !");
         }
-        
-        
+
+        private int CalculateDamageByArmors(int baseDamage, bool isPhysical, Armors.Armors armorType)
+        {
+            double reductionPercentage = 0;
+
+            if (isPhysical)
+            {
+                switch (armorType)
+                {
+                    case Armors.Armors.Fabric:
+                        reductionPercentage = 0;
+                        break;
+                    case Armors.Armors.Leather:
+                        reductionPercentage = 0.15;
+                        break;
+                    case Armors.Armors.Mesh:
+                        reductionPercentage = 0.30;
+                        break;
+                    case Armors.Armors.Plate:
+                        reductionPercentage = 0.45;
+                        break;
+                }
+            }
+            else
+            {
+                switch (armorType)
+                {
+                    case Armors.Armors.Fabric:
+                        reductionPercentage = 0.30;
+                        break;
+                    case Armors.Armors.Leather:
+                        reductionPercentage = 0.20;
+                        break;
+                    case Armors.Armors.Mesh:
+                        reductionPercentage = 0.10;
+                        break;
+                    case Armors.Armors.Plate:
+                        reductionPercentage = 0;
+                        break;
+                }
+            }
+
+            return (int)(baseDamage * (1 - reductionPercentage));
+        }
+
+
     }
 }

@@ -340,7 +340,7 @@
                     Console.WriteLine("- Targets:");
                     foreach (var target in spell.TargetCharacters)
                     {
-                        Console.WriteLine($"  * {target.Name} (HP: {target.PvActual}/{target.PV})");
+                        Console.WriteLine($"  * {target.Name} (HP: {target.PvActual}/{target.Pv})");
                     }
                 }
                 else

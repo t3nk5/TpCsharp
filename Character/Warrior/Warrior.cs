@@ -13,7 +13,7 @@
         {
             Name = "Warrior";
             PvActual = 100;
-            PV = 100;
+            Pv = 100;
             PhysicalAttack = 50;
             MagicalAttack = 0;
             Armor = Armors.Fabric;

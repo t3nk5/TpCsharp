@@ -13,7 +13,7 @@
         {
             Name = "Paladin";
             PvActual = 95;
-            PV = 95;
+            Pv = 95;
             PhysicalAttack = 40;
             MagicalAttack = 40;
             Armor = Armors.Mesh;
