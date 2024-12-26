@@ -13,9 +13,8 @@
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
     - [Usage](#usage)
-4. [Character Balancing](#Character-Balancing)
-5. [Contributing](#contributing)
-6. [Feedback on the Project](#Feedback-on-the-Project)
+4. [Contributing](#contributing)
+5. [Feedback on the Project](#Feedback-on-the-Project)
 
 ---
 
@@ -65,23 +64,18 @@ Make sure you have the following tools installed:
 ### **Usage**
 Now you can play my game
 
-### **Character Balancing**
-
-
-
-
-
-
-
-
-
-
-
-
 ### **Contributing**
 I am the sole contributor to this project.
 Look my new GitHub account: https://github.com/t3nk5
 
 
 ### **Feedback on the Project**
-I am not very proud of my project because I simply couldn’t fully commit to it. We had already done almost the same project in C++ last year. If I had to do it again, I would approach it differently and try to better optimize my code, as I feel my project is not optimized enough. C# is very practical because it’s a mix between JAVA, which I enjoy for its readability, and the performance of C/C++.
+I am not very proud of my project because 
+I simply couldn’t fully commit to it. 
+We had already done almost the same project in C++ last year.
+There are many bugs, and the mana usage is not functioning properly, as well as some of the attacks. 
+If I had to do it again, 
+I would approach it differently and try to better optimize my code, 
+as I feel my project is not optimized enough. C# is very practical 
+because it’s a mix between JAVA, which I enjoy for its readability, 
+and the performance of C/C++.
