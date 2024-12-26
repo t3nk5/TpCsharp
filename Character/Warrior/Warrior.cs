@@ -6,11 +6,17 @@
     using Spell.TargetType;
     using Spell.DamageType;
     
-
+    /// <summary>
+    /// Represents a Warrior character, a strong and resilient fighter focused on physical combat.
+    /// </summary>
     public class Warrior : Character
     {
+        /// <summary>
+        /// Constructor for initializing the Warrior character with default values.
+        /// </summary>
         public Warrior()
         {
+            //Set every value of Warrior
             Name = "Warrior";
             PvActual = 100;
             Pv = 100;
