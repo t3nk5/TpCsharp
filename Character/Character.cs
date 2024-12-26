@@ -79,16 +79,15 @@
         /// </summary>
         public bool IsAlive { get; set; } = true;
 
-        
-        
-        
+
         /// <summary>
         /// Processes an incoming attack, applying dodges, parries, magic resistance,
         /// and armor-based damage reductions as necessary. Updates the character's health accordingly.
         /// </summary>
         /// <param name="damage">The base damage to the incoming attack.</param>
         /// <param name="damageType">The type of damage (Physical or Magical).</param>
-        public void GetAttack(int damage, Damage damageType)
+        /// <param name="attacker">Only for Warrior counter</param>
+        public virtual void GetAttack(int damage, Damage damageType, Character attacker)
         {
             switch (damageType)
             {
@@ -140,7 +139,7 @@
         /// <returns>
         /// Returns true if the character dodges the attack, otherwise false.
         /// </returns>
-        private bool Dodge()
+        protected bool Dodge()
         {
             var random = new Random();
             var roll = random.NextDouble();
@@ -159,7 +158,7 @@
         /// <returns>
         /// Returns true if the character parries the attack, otherwise false.
         /// </returns>
-        private bool Parry()
+        protected bool Parry()
         {
             var random = new Random();
             var roll = random.NextDouble();
@@ -173,7 +172,7 @@
         /// <returns>
         /// Returns true if the character resists the magical attack, otherwise false.
         /// </returns>
-        private bool ResistMagic()
+        protected bool ResistMagic()
         {
             var random = new Random();
             var roll = random.NextDouble();
@@ -228,7 +227,7 @@
         /// Marks the character as dead by setting IsAlive to false
         /// and displays a message indicating the character's death.
         /// </summary>
-        private void Dead()
+        protected void Dead()
         {
             IsAlive = false;
             Console.WriteLine($"{Name} is dead !");
@@ -244,7 +243,7 @@
         /// <returns>
         /// The damage value after applying the appropriate reduction based on the armor type and attack type.
         /// </returns>
-        private int CalculateDamageByArmors(int baseDamage, bool isPhysical, Armors.Armors armorType)
+        protected int CalculateDamageByArmors(int baseDamage, bool isPhysical, Armors.Armors armorType)
         {
             double reductionPercentage = 0;
 
