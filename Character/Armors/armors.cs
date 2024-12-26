@@ -1,9 +1,13 @@
-﻿namespace Tp.Character.Armors;
-
-public enum Armors
+﻿namespace Tp.Character.Armors
 {
-    Fabric,
-    Leather,
-    Mesh,
-    Plate
+    /// <summary>
+    /// Represents different types of armor.
+    /// </summary>
+    public enum Armors
+    {
+        Fabric,
+        Leather,
+        Mesh,
+        Plate
+    }
 }
