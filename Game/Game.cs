@@ -42,6 +42,7 @@
 
             while (!CheckWin())
             {
+                Console.Clear();
                 Console.WriteLine("\n--- New Round ---\n");
 
                 for (var i = 1; i <= 3; i++)
@@ -350,11 +351,12 @@
                 }
             });
 
+            /*
             Console.WriteLine("Spells sorted by attacker speed:");
             foreach (var spell in _spellsRound)
             {
                 Console.WriteLine($"{spell.Name} (Attacker: {spell.Attacker.Name}, Speed: {spell.Attacker.Speed})");
-            }
+            }*/
         }
 
         /// <summary>
@@ -433,7 +435,9 @@
                     if (spell.ActualCooldown > 1)
                     {
                         spell.ActualCooldown -= 1;
+                        /*
                         Console.WriteLine($"Cooldown for {spell.Name} decreased to {spell.ActualCooldown}.");
+                        */
                     }
                 }
             }
@@ -447,12 +451,15 @@
         {
             if (!_team1.Any(c => c.IsAlive))
             {
+                Console.Clear();
                 Console.WriteLine($"{NamePlayer2} wins! All characters in {NamePlayer1}'s team are defeated.");
                 return true;// Return true, Player 2 win
             }
 
             if (!_team2.Any(c => c.IsAlive))
             {
+                Console.Clear();
+                
                 Console.WriteLine($"{NamePlayer1} wins! All characters in {NamePlayer2}'s team are defeated.");
                 return true;// Return true, Player 1 win
             }

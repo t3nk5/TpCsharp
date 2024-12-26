@@ -125,7 +125,7 @@
             var previousPv = PvActual;
             PvActual = Math.Max(0, PvActual - damage);
 
-            Console.WriteLine($"{Name} suffered {damage} damage. HP: {previousPv} → {PvActual}/{Pv}");
+            Console.WriteLine($"{Name} suffered {damage} damage. HP: {PvActual}/{Pv}");
             
             if (PvActual <= 0)
             {

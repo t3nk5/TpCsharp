@@ -11,7 +11,5 @@
         Shield,   //
         Mana,     //remove mana
         Other     //Special spell
-
-
     }
 }
