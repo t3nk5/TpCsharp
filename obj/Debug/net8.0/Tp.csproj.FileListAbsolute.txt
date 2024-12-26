@@ -1,0 +1,15 @@
+C:\Projects\Csharp\TpCsharp\bin\Debug\net8.0\Tp.exe
+C:\Projects\Csharp\TpCsharp\bin\Debug\net8.0\Tp.deps.json
+C:\Projects\Csharp\TpCsharp\bin\Debug\net8.0\Tp.runtimeconfig.json
+C:\Projects\Csharp\TpCsharp\bin\Debug\net8.0\Tp.dll
+C:\Projects\Csharp\TpCsharp\bin\Debug\net8.0\Tp.pdb
+C:\Projects\Csharp\TpCsharp\obj\Debug\net8.0\Tp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\Csharp\TpCsharp\obj\Debug\net8.0\Tp.AssemblyInfoInputs.cache
+C:\Projects\Csharp\TpCsharp\obj\Debug\net8.0\Tp.AssemblyInfo.cs
+C:\Projects\Csharp\TpCsharp\obj\Debug\net8.0\Tp.csproj.CoreCompileInputs.cache
+C:\Projects\Csharp\TpCsharp\obj\Debug\net8.0\Tp.sourcelink.json
+C:\Projects\Csharp\TpCsharp\obj\Debug\net8.0\Tp.dll
+C:\Projects\Csharp\TpCsharp\obj\Debug\net8.0\refint\Tp.dll
+C:\Projects\Csharp\TpCsharp\obj\Debug\net8.0\Tp.pdb
+C:\Projects\Csharp\TpCsharp\obj\Debug\net8.0\Tp.genruntimeconfig.cache
+C:\Projects\Csharp\TpCsharp\obj\Debug\net8.0\ref\Tp.dll

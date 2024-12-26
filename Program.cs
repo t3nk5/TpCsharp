@@ -1,3 +1,11 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿namespace Tp;
 
-Console.WriteLine("Hello, World!");
+public abstract class Program
+{
+    private static void Main()
+    {
+        var game = new Game.Game();
+        game.BeginGame();
+     
+    }
+}
