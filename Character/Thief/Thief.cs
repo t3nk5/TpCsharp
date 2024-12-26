@@ -6,11 +6,17 @@
     using Spell.TargetType;
     using Spell.DamageType;
 
-
+    /// <summary>
+    /// Represents a Thief character, focused on stealth, agility, and physical attacks.
+    /// </summary>
     public class Thief : Character
     {
+        /// <summary>
+        /// Constructor for initializing the Thief character with default values.
+        /// </summary>
         public Thief()
         {
+            //Set every value of Thief
             Name = "Thief";
             PvActual = 80;
             Pv = 80;
