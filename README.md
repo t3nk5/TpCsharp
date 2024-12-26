@@ -1,4 +1,4 @@
-# Final Project Csharp
+# Final Project C#
 
 [![Version](https://img.shields.io/badge/version-1.0.0-green)](CHANGELOG.md)
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](url_to_build_status)

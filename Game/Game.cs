@@ -154,11 +154,6 @@
                 Console.WriteLine($"{playerName} has chosen to skip their turn.");
                 return;
             }
-            if (result == (team.Count + 1).ToString()) 
-            {
-                Console.WriteLine($"{playerName} has chosen to skip their turn.");
-                return; 
-            }
 
             var selectedCharacter = team[int.Parse(result) - 1];
             SelectedCharacter = selectedCharacter;
