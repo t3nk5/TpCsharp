@@ -9,7 +9,10 @@
     using Spell;
     using Spell.TargetType;
 
-
+    /// <summary>
+    /// Represents a game where two players compete by selecting characters and using spells.
+    /// Manages the teams, characters, and interactions between the players during the game.
+    /// </summary>
     public class Game
     {
         private string? NamePlayer1 { get; set; }
@@ -23,7 +26,12 @@
 
         private readonly List<Spell> _spellsRound = [];
 
-
+        /// <summary>
+        /// Starts and runs the game. Initializes the game, handles the rounds, and checks for a winner.
+        /// In each round, each player (Player 1 and Player 2) takes turns to select their characters, 
+        /// choose an attack, and perform actions such as casting spells and reducing cooldowns. 
+        /// The game continues until one player wins (all characters from the opponent's team are defeated).
+        /// </summary>
         public void BeginGame()
         {
             Console.Clear();
@@ -57,6 +65,12 @@
         }
 
 
+        /// <summary>
+        /// Initializes the characters for both players, prompting them to select their teams.
+        /// The game supports exactly two players, and each player selects 3 characters from a set of 5 available classes.
+        /// The function displays the choices, assigns characters to each player's team, and prints the teams once they're ready.
+        /// </summary>
+        /// <param name="playerCount">The number of players in the game (must be 2).</param>
         private void InitializationCharacter(int playerCount)
         {
             if (playerCount != 2)
@@ -113,6 +127,15 @@
             DisplayTeam(_team2);
         }
 
+        /// <summary>
+        /// Handles the process of choosing a character and a spell during a player's turn.
+        /// Prompts the player to select a character from their team, then select a spell for that character,
+        /// and finally checks whether the selected spell is available (i.e., not on cooldown).
+        /// If the spell is available, the player can select the target for the spell.
+        /// If the spell is on cooldown, the player is prompted to select another spell.
+        /// </summary>
+        /// <param name="playerName">The name of the player whose turn it is.</param>
+        /// <param name="team">The list of characters belonging to the player.</param>
         private void ChooseAttack(string? playerName, List<Character> team)
         {
             Console.WriteLine($"{playerName}, it's your turn\nSelect your character to attack");
@@ -140,7 +163,7 @@
                 result = Input(selectedCharacter.Spells.Count);
                 var selectedSpell = selectedCharacter.Spells[int.Parse(result) - 1];
                 
-                if (TestIfCooldownIsGood(selectedCharacter, selectedSpell))
+                if (TestIfCooldownIsGood(selectedSpell))
                 {
                     SwitchTargetType(playerName, team, selectedSpell);
                 }
@@ -149,11 +172,14 @@
                     Console.WriteLine($"The spell '{selectedSpell.Name}' of  {selectedCharacter.Name} is on cooldown! Please select another spell.");
                     ChooseAttack(playerName, team); 
                 }
-
-                
             }
         }
-
+        
+        /// <summary>
+        /// Returns a corresponding integer based on the type of target specified in the spell.
+        /// </summary>
+        /// <param name="spell">The spell whose target type is being tested.</param>
+        /// <returns>An integer value corresponding to the target type of the spell.</returns>
         private int TestTypeTarget(Spell spell)
         {
             return spell.TargetType switch
@@ -167,10 +193,16 @@
             };
         }
 
+        /// <summary>
+        /// Handles the target selection based on the type of spell and the team provided.
+        /// </summary>
+        /// <param name="playerName">The name of the player selecting the target.</param>
+        /// <param name="team">The list of characters representing the team of the player.</param>
+        /// <param name="selectedSpell">The spell selected by the player, which requires a target.</param>
         private void SwitchTargetType(string? playerName, List<Character> team, Spell selectedSpell)
         {
-            List<Character>? enemyTeam;
-            switch (TestTypeTarget(selectedSpell))
+            List<Character>? enemyTeam; // This will store the enemy team list based on the player's team
+            switch (TestTypeTarget(selectedSpell)) // Check the target type of the selected spell
             {
                 case 0:
                     Console.WriteLine("No valid targets available.");
@@ -252,7 +284,11 @@
                     break;
             }
         }
-
+        
+        /// <summary>
+        /// Displays the names of all characters in the specified team, each with a corresponding index number.
+        /// </summary>
+        /// <param name="team">The list of characters whose names will be displayed.</param>
         private void DisplayTeam(List<Character> team)
         {
             var index = 1;
@@ -263,10 +299,16 @@
             }
         }
 
+        /// <summary>
+        /// Prompts the user to enter a number between 1 and the specified number of possibilities.
+        /// The input is validated to ensure it's an integer within the valid range. 
+        /// If the input is invalid, the user is prompted to try again until a valid input is entered.
+        /// </summary>
+        /// <param name="numberOfPossibilities">The maximum number in the valid input range (1 to numberOfPossibilities).</param>
+        /// <returns>A valid string representing the user's input.</returns>
         private string Input(int numberOfPossibilities)
         {
             Console.WriteLine($"Enter a number between 1 and {numberOfPossibilities}:");
-
             while (true)
             {
                 var result = Console.ReadLine();
@@ -274,11 +316,15 @@
                 {
                     return result;
                 }
-
                 Console.WriteLine("Invalid input. Please try again.");
             }
         }
 
+        /// <summary>
+        /// Sorts the list of spells (_spellsRound) based on the attacker's speed. 
+        /// If two spells have attackers with the same speed, the order is decided randomly. 
+        /// Displays the sorted list of spells after sorting by speed.
+        /// </summary>
         private void SortAttack()
         {
             if (_spellsRound.Count == 0)
@@ -298,9 +344,7 @@
                 if (spell1.Attacker.Speed < spell2.Attacker.Speed)
                 {
                     return 1; // spell2 before spell1
-                }
-                else
-                {
+                }else {
                     // random when same speed
                     return random.Next(0, 2) == 0 ? -1 : 1;
                 }
@@ -313,6 +357,11 @@
             }
         }
 
+        /// <summary>
+        /// Displays information about the spells cast in the current round, including their name, cooldown, damage, mana cost, 
+        /// attacker, target type, and target characters, if any. 
+        /// If no spells have been cast, it will notify the user that no spells were cast.
+        /// </summary>
         private void DisplayAttack()
         {
             if (_spellsRound.Count == 0)
@@ -353,16 +402,28 @@
             }
         }
 
+        /// <summary>
+        /// Executes the attack phase for the current round, using all the spells stored in the _spellsRound list.
+        /// </summary>
         private void Attack()
         {
             _spellsRound.ForEach(spell => spell.Use());
         }
 
-        private bool TestIfCooldownIsGood(Character character, Spell selectedSpell)
+        /// <summary>
+        /// Checks if the cooldown of the selected spell is 0 or 1, indicating that the spell is either ready to be used or is about to be ready.
+        /// </summary>
+        /// <param name="selectedSpell">The spell whose cooldown is being checked.</param>
+        /// <returns>True if the cooldown is 0 or 1, indicating the spell is ready or almost ready; otherwise, false.</returns>
+        private bool TestIfCooldownIsGood(Spell selectedSpell)
         {
-            return selectedSpell.ActualCooldown == 0 || selectedSpell.ActualCooldown == 1;
+            return selectedSpell.ActualCooldown is 0 or 1;
         }
         
+        /// <summary>
+        /// Decreases the cooldown for all spells of each character in the given team.
+        /// </summary>
+        /// <param name="team">The list of characters whose spells' cooldowns will be decreased.</param>
         private void DecreaseCooldowns(List<Character> team)
         {
             foreach (var character in team)
@@ -378,22 +439,25 @@
             }
         }
 
-
+        /// <summary>
+        /// Checks if any team has won the game by verifying if all characters in the opposing team are defeated.
+        /// </summary>
+        /// <returns>True if one team has won, otherwise false.</returns>
         private bool CheckWin()
         {
             if (!_team1.Any(c => c.IsAlive))
             {
                 Console.WriteLine($"{NamePlayer2} wins! All characters in {NamePlayer1}'s team are defeated.");
-                return true;
+                return true;// Return true, Player 2 win
             }
 
             if (!_team2.Any(c => c.IsAlive))
             {
                 Console.WriteLine($"{NamePlayer1} wins! All characters in {NamePlayer2}'s team are defeated.");
-                return true;
+                return true;// Return true, Player 1 win
             }
 
-            return false;
+            return false;// No winner yet, game continues
         }
     }
 }
