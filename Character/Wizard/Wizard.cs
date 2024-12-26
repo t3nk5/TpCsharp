@@ -6,11 +6,17 @@
     using Spell.TargetType;
     using Spell.DamageType;
     
-    
+    /// <summary>
+    /// Represents a Wizard character, specializing in magical attacks and supportive spells.
+    /// </summary>
     public class Wizard : Character, IMana.IMana
     {
+        /// <summary>
+        /// Constructor for initializing the Wizard character with default values.
+        /// </summary>
         public Wizard()
         {
+            //Set every value of Wizard
             Name = "Wizard";
             PvActual = 60;
             Pv = 60;
@@ -34,6 +40,9 @@
             
         }
 
+        /// <summary>
+        /// The Wizard drinks mana to replenish their mana pool by half of their max mana (or up to the max).
+        /// </summary>
         public void DrinkMana()
         {
             if (Mana + MaxMana / 2 >= MaxMana)
@@ -47,6 +56,10 @@
             Console.WriteLine($"{Name} drink mana and gain {MaxMana/2} mana. \n{Name} have : {Mana}/{MaxMana} mana.");
         }
 
+        /// <summary>
+        /// The Wizard uses a specified amount of mana to cast a spell or perform an action.
+        /// </summary>
+        /// <param name="mana">The amount of mana to use.</param>
         public void UseMana(int mana)
         {
             if (Mana - mana <= 0)
