@@ -146,33 +146,43 @@
                 Console.WriteLine($"{index}- {character.Name}");
                 index++;
             }
-
-            var result = Input(team.Count);
+            Console.WriteLine($"{index}- Skip turn");
+            
+            var result = Input(team.Count + 1);
+            if (result == (team.Count + 1).ToString())
             {
-                var selectedCharacter = team[int.Parse(result) - 1];
-                SelectedCharacter = selectedCharacter;
-                Console.WriteLine($"\n{selectedCharacter.Name} has been selected.");
-                Console.WriteLine($"Select a spell for {selectedCharacter.Name}:");
-                index = 1;
+                Console.WriteLine($"{playerName} has chosen to skip their turn.");
+                return;
+            }
+            if (result == (team.Count + 1).ToString()) 
+            {
+                Console.WriteLine($"{playerName} has chosen to skip their turn.");
+                return; 
+            }
 
-                foreach (var spell in selectedCharacter.Spells)
-                {
-                    Console.WriteLine($"{index}. {spell.Name}");
-                    index++;
-                }
+            var selectedCharacter = team[int.Parse(result) - 1];
+            SelectedCharacter = selectedCharacter;
+            Console.WriteLine($"\n{selectedCharacter.Name} has been selected.");
+            Console.WriteLine($"Select a spell for {selectedCharacter.Name}:");
+    
+            index = 1;
+            foreach (var spell in selectedCharacter.Spells)
+            {
+                Console.WriteLine($"{index}. {spell.Name}");
+                index++;
+            }
 
-                result = Input(selectedCharacter.Spells.Count);
-                var selectedSpell = selectedCharacter.Spells[int.Parse(result) - 1];
-                
-                if (TestIfCooldownIsGood(selectedSpell))
-                {
-                    SwitchTargetType(playerName, team, selectedSpell);
-                }
-                else
-                {
-                    Console.WriteLine($"The spell '{selectedSpell.Name}' of  {selectedCharacter.Name} is on cooldown! Please select another spell.");
-                    ChooseAttack(playerName, team); 
-                }
+            result = Input(selectedCharacter.Spells.Count);
+            var selectedSpell = selectedCharacter.Spells[int.Parse(result) - 1];
+
+            if (TestIfCooldownIsGood(selectedSpell))
+            {
+                SwitchTargetType(playerName, team, selectedSpell);
+            }
+            else
+            {
+                Console.WriteLine($"The spell '{selectedSpell.Name}' of {selectedCharacter.Name} is on cooldown! Please select another spell.");
+                ChooseAttack(playerName, team);
             }
         }
         
